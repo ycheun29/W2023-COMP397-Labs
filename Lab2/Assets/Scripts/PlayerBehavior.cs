@@ -27,8 +27,8 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius,groundMask);
-        if (!isGrounded && velocity.y > 0.0f)
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
+        if (isGrounded && velocity.y < 0.0f)
         {
             velocity.y = -2.0f;
         }
@@ -37,7 +37,7 @@ public class PlayerBehavior : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         Vector3 move= transform.right * x + transform.forward * y;
-        controller.Move(move* maxSpeed * Time.deltaTime);
+        controller.Move(move * maxSpeed * Time.deltaTime);
 
         if (Input.GetButton("Jump") && isGrounded){
             velocity.y=Mathf.Sqrt(jumpHeight * -2.0f * gravity);
@@ -49,6 +49,7 @@ public class PlayerBehavior : MonoBehaviour
     }
 
      private void OnDrawGizmos() {
-      // Gizmos.color = controller.Green;
+        Gizmos.color=Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
 }
